@@ -1,0 +1,16 @@
+LOG FILE:
+https://aurelio.net/shell/canivete/:
+Time of process:
+0.006
+Date: 2025-06-08_17-40-03
+The site https://aurelio.net/shell/canivete/ is active (Status Code: 200)
+https://google.com/uma-pagina-que-nao-existe:
+Time of process:
+0.006
+Date: 2025-06-08_17-40-03
+The site https://google.com/uma-pagina-que-nao-existe is inactive (Status Code: 404)
+https://google.com/:
+Time of process:
+0.004
+Date: 2025-06-08_17-40-03
+The site https://google.com/ is active (Status Code: 301)

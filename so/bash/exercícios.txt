@@ -1,0 +1,38 @@
+Para todos os exercícios informar os dados para os scripts usando argumentos
+
+1 - Faça um script para realizar o backup de uma pasta e todo o seu conteúdo (arquivos e diretórios). Devem ser informados (como argumentos), a pasta a ser realizado o backup e a pasta para salvar o backup. O nome do arquivo a ser gerado como backup deve ser o nome da pasta e a data e horario do backup. Use o padrão tar.gz
+
+2 - Faça um script que realize o backup de uma lista de diretórios. A lista de diretórios deve ser armazenada em um arquivo, em que cada uma de suas linhas contenham um arquivo a ser realizado o backup. O script deverá receber como parametros o nome do arquivo com a lista de diretórios e o diretório destino do backup. O nome dos arquivos de backup devem seguir o mesmo padrão do exercício anterior.
+
+3 - Use o sistema cron para que o backup do exercíco 2 seja executado todos os dias as 23:59. 
+
+4 - Faça um script que verifique se um determinado endereço url está ativo. Deve ser informado ao scritp o url como argumento. 
+
+5 - Faça um script que verique se uma lista de urls está ativa (aceitando conexao). O arquivo deve criar um arquivo log, apresentando as urls, o horário do testes, se foi ok ou não e quanto tempo a url levou para responder. Devem ser informados como argumentos o arquivo contendo a lista de urls e o arquivo de log (lembre de sembre gravar o log como append)
+
+6 - Use o sistema cron para que rodar o o exercício 5 a cada hora. 
+
+7 - Faça um script que list o conteúdo de um diretório e crie um arquivo contendo o código hash (pode ser md5 ou sha) de cada arquivo. 
+
+8 - Faça um script que use o arquivo de log do exemplo anterior e verique se código hash está correto. 
+
+9 - Faça um scritp que compare dois diretórios e verifique se há arquivos duplicados. 
+
+10 - Faça um script que compare dois diretórios e verifique se o conteúdo dos arquivos é identico usando hash. 
+
+11 - Faça um script que compare dois diretórios e apresente os arquivos que tenham o mesmo nome e se estes aquivos também apresentam o mesmo conteúcdo ou são diferentes.
+
+12 - Faça um script que converta todos os arquivos png de um diretório para jpg. 
+
+13 - Escreva um script que renomeia todos os arquivos de um diretório, substituindo espaços por sublinhados _.
+
+14 - Faça um script que conte a ocorrencia de todas as extensões de arquivos
+Exemplo: quantos .txt, .jpg, .sh, etc. existem num diretório (e subdiretórios).
+Saída de ser algo como:
+
+txt: 12
+jpg: 5
+sh: 3
+
+15 - Crie um script que percorre um diretório e compacta cada um dos arquivos modificados há mais de N dias usando tar.gz. 
+

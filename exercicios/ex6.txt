@@ -1,0 +1,2 @@
+crontab -e
+30 13 *** /home/Documentos/GitHub/sistemasoperacionais/exercicios/ex5.sh /home/Documentos/GitHub/sistemasoperacionais/exercicios/ex5-list /home/Documentos/GitHub/sistemasoperacionais/exercicios/

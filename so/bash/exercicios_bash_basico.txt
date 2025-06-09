@@ -1,0 +1,14 @@
+Exercicio 1
+faca um comando maiormenor.sh que apresente o
+maior e menor arquivo de um diretorio
+O programa deve apresentar o nome dos arquivos e o seu tamanho
+
+Exercicio 2
+Repita o exercício anterior para que seja recursivo, ou seja, deve levar em consideracao todos os subdiretorios
+
+Exercicio 3
+Faça um comando relatoriomaxmin.sh
+Apresente uma lista mostrando o maior e o menor arquivos de cada um dos subdiretorios e do diretorio informado. 
+Deve ser apresentado um relatorio, informando o caminho para o diretorio e na sequencia o nome do maior e menor arquivos com seus respectivos tamanhos
+
+

@@ -1,0 +1,2 @@
+apostila introducao ao bash - https://aurelio.net/shell/apostila-introducao-shell.pdf
+canivete suiço shell - https://aurelio.net/shell/canivete/

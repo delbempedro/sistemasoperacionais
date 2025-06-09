@@ -1,0 +1,66 @@
+Para todos os exercícios informar os dados para os scripts usando argumentos
+
+Exercicio 1 X
+    Faça um script que apresente o maior e menor arquivo de um diretorio.
+    O programa deve apresentar o nome dos arquivos e o seu tamanho.
+
+Exercicio 2 X
+    Repita o exercício anterior para que seja recursivo, ou seja, deve levar em consideracao todos os subdiretorios
+
+Exercicio 3 X
+    Faça um script que apresente uma lista mostrando o maior e o menor arquivos de cada um dos subdiretorios e do diretorio informado. 
+    Deve ser apresentado um relatorio, informando o caminho para o diretorio e na sequencia o nome do maior e menor arquivos com seus respectivos tamanhos
+
+Exercicio 4 X
+    Faça um script para realizar o backup de uma pasta e todo o seu conteúdo (arquivos e diretórios).
+    Devem ser informados (como argumentos), a pasta a ser realizado o backup e a pasta para salvar o backup.
+    O nome do arquivo a ser gerado como backup deve ser o nome da pasta e a data e horario do backup. Use o padrão tar.gz
+
+Exercicio 5 X
+    Faça um script que realize o backup de uma lista de diretórios.
+    A lista de diretórios deve ser armazenada em um arquivo, em que cada uma de suas linhas contenham um arquivo a ser realizado o backup.
+    O script deverá receber como parametros o nome do arquivo com a lista de diretórios e o diretório destino do backup. O nome dos arquivos de backup devem seguir o mesmo padrão do exercício anterior.
+
+Exercicio 6 X (17:10)
+    Use o sistema cron para que o backup do exercíco 5 seja executado todos os dias as 23:59. 
+
+Exercicio 7 X
+    Faça um script que verifique se um determinado endereço url está ativo.
+    Deve ser informado ao scritp o url como argumento. 
+
+Exercicio 8 X
+    Faça um script que verique se uma lista de urls está ativa (aceitando conexao).
+    O arquivo deve criar um arquivo log, apresentando as urls, o horário do testes, se foi ok ou não e quanto tempo a url levou para responder.
+    Devem ser informados como argumentos o arquivo contendo a lista de urls e o arquivo de log (lembre de sembre gravar o log como append)
+
+Exercicio 9 X (**:10)
+    Use o sistema cron para que rodar o o exercício 8 a cada hora. 
+
+Exercicio 10 X
+    Faça um script que liste o conteúdo de um diretório e crie um arquivo contendo o código hash (pode ser md5 ou sha) de cada arquivo. 
+
+Exercicio 11 X
+    Faça um script que use o arquivo de log do exemplo anterior e verique se código hash está correto. 
+
+Exercicio 12 X
+    Faça um script que compare dois diretórios e verifique se há arquivos duplicados. 
+
+Exercicio 13 X
+    Faça um script que compare dois diretórios e verifique se o conteúdo dos arquivos é identico usando hash. 
+
+Exercicio 14 X
+    Faça um script que compare dois diretórios e apresente os arquivos que tenham o mesmo nome e se estes aquivos também apresentam o mesmo conteúdo ou são diferentes.
+
+Exercicio 15 X
+    Faça um script que converta todos os arquivos png de um diretório para jpg. 
+
+Exercicio 16 X
+    Escreva um script que renomeia todos os arquivos de um diretório, substituindo espaços por sublinhados _.
+
+Exercicio 17 X
+    Faça um script que conte a ocorrencia de todas as extensões de arquivos
+    Exemplo: quantos .txt, .jpg, .sh, etc. existem num diretório (e subdiretórios).
+    Saída de ser algo como: "txt: 12 jpg: 5 sh: 3"
+
+Exercicio 18
+    Crie um script que percorre um diretório e compacta cada um dos arquivos modificados, pela última vez, há mais de N dias usando tar.gz. 

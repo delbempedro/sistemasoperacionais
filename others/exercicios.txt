@@ -1,0 +1,10 @@
+1 maiormenor.sh
+maior e menor arquivo de um diretorio
+com nome dos arquivos e tamanho
+
+2
+maior e menor aquivo de um diretorio de maneira recursiva, ou seja, considerar os subdiretorios
+
+3 relatoriomaxmin.sh
+apresentar uma lista com os maiores e menores arquivos de cada um dos subdiretorios e do diretorio informado
+deve ser apresentado um relatorio, informando o caminho para o diretorioo e na sequencia o nome do maior e menor arquivo com seus respectivos tamanhos
