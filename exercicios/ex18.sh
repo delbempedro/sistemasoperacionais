@@ -20,7 +20,6 @@ backup(){
             modified_days=$(( difference / 86400 ))
 
             if [[ "$modified_days" -gt "$days" ]]; then
-                echo here
                 tar -czf "ex18/$(basename "$file").tar.gz" "$file"
             fi
         fi
