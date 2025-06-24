@@ -1,0 +1,30 @@
+Para todos os exercícios informar os dados para os scripts usando argumentos
+
+1 - Faça um script que realize o backup de uma lista de diretórios. 
+A lista de diretórios deve ser armazenada em um arquivo, em que cada uma de suas linhas contenham um arquivo a ser realizado o backup. 
+O script deverá receber como parametros o nome do arquivo com a lista de diretórios e o diretório destino do backup. 
+O nome dos arquivos de backup devem seguir o mesmo padrão <nome do diretório>_<data>.tar.gz. .
+O nome do arquivo a ser gerado como backup deve ser o nome da pasta e a data e horario do backup. Use o padrão tar.gz
+Faça o exercício usando fork simples, IPC arquivo, IPC pipe (BASH e python) e thread
+
+2 - Faça um script que verique se uma lista de urls está ativa (aceitando conexao). O pai deve gerar um filho para cada url. O filho deve retornar ao pai, a informação do status da url a cada 5 minutos. 
+O usário ao rodar o script deve informar por quanto tempo serão monitoradas as urls, por exemplo, 30min, x horas ou x dias. Toda vez que o filho comunica com o pai, deve informar a hora que realizou o acesso a url 
+e como estava o status da comunicação (tempo de latencia da rede). Um dos processos criados pelo pai verifica se o usuário quer terminar ou não a análise, por exemplo, aguardando o usuário teclar z. Caso isso ocorra, 
+deve avisar ao pai que o usuário solicitou para terminar a análise. Assim o pai deve enviar um comando para cada um dos filhos e assim cada filho finalizara seu processo. 
+No final da execução o pai deve criar um arquivo log, apresentando as urls, o horário do testes, se foi ok ou não e quanto tempo a url levou para responder. Devem ser informados como argumentos o arquivo contendo a lista de urls e o arquivo de log/
+Faça o exercício usando fork simples, IPC arquivo, IPC pipe (BASH e python) e thread
+
+3 - Faça um script que list o conteúdo de um diretório e crie um arquivo contendo o código hash (pode ser md5 ou sha) de cada arquivo. 
+Faça o exercício usando fork simples, IPC arquivo, IPC pipe e thread
+
+4 - Faça um script que use o arquivo de log do exemplo anterior e verique se código hash está correto. 
+Faça o exercício usando fork simples, IPC arquivo, IPC pipe (BASH e python) e thread
+
+a - (fork simples) Implemente o script usando fork, onde o processo pai atribui para cada um dos processos 
+filhos o diretório a ser compactado e cada filho fica responsável por compactar um diretório específico. 
+b - (fork ipc arquivo) Agora cada um dos filhos deve informar ao pai, que terminou sua tarefa e se teve ou não sucesso. 
+O pai deve apresentar de tempos em tempos a evolução do backup no terminal com o resultado de cada um dos filhos. No final da execução o pai, deve apresentar
+uma lista contendo os arquivos gerados com êxito e onde estão. 
+c - Faça o mesmo que o exercício b, usando pipe como ipc
+d - Repita o exercício anterior usando python e fork de processos com ipc pipe. 
+d - Repita o exercício em python usando threads

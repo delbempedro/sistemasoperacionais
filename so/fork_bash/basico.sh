@@ -9,16 +9,22 @@ tarefa() {
 
 # Função que simula um processo filho
 filho() {
+  sleep 1
+  echo "sou filho $1, Var = $var"
   echo "Filho $1 (PID $$) iniciado"
   tarefa $2
   echo "Filho $1 (PID $$) finalizado após $2 segundos"
+  var=2
 }
 
 echo "Pai (PID $$) iniciando..."
 
+
 # Iniciar 3 filhos em background
+var=0
 filho 1 3 &
 pid1=$!
+var=5
 filho 2 2 &
 pid2=$!
 filho 3 4 &
