@@ -1,0 +1,4 @@
+../so
+../exerciciosP1
+../others
+../proibido
