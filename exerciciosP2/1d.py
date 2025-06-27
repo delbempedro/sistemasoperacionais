@@ -8,11 +8,11 @@ def processo(file, output_dir, pipe):
 
     status = ""
 
-    try:
+    time = datetime.datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
+    basename = os.path.basename(file)
+    backupname = f"{output_dir}/{basename}_{time}.tar.gz"
 
-        time = datetime.datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
-        basename = os.path.basename(file)
-        backupname = f"{output_dir}/{basename}_{time}.tar.gz"
+    try:
 
         status = os.system(f"tar -czf {backupname} {file} 2> /dev/null")
 
@@ -39,6 +39,7 @@ def main(listfile, output_dir, pipe):
 
     pid_childs = []
     for directory in directorys:
+        print(directory)
         pid = os.fork()
         if not pid:
             processo(directory, output_dir, pipe)
@@ -65,13 +66,13 @@ def main(listfile, output_dir, pipe):
                     print(f"Child {directory} finished unsuccessfuly - Permission denied")
                     fails.append(info)
 
-        for pid in pid_childs:
-            os.waitpid(pid, 0)
+    for pid in pid_childs:
+        os.waitpid(pid, 0)
 
-        print("Successes files are:")
-        if sucesses:
-            for path in sucesses:
-                print(f"- {path}")
+    print("Successes files are:")
+    if sucesses:
+        for path in sucesses:
+            print(f"- {path}")
 
 if __name__ == "__main__":
 

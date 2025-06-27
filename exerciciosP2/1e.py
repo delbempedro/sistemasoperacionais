@@ -9,19 +9,18 @@ falhas = []
 
 global_lock = Lock()
 
-def thread(arquivo_origem, pasta_destino):
+def worker(arquivo_origem, pasta_destino):
 
     global sucessos
 
     time = datetime.datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
-    arquivo_nome = f"{pasta_destino}/{arquivo_origem}-{time}.tar.gz"
+    nome = os.path.basename(arquivo_origem)
+    arquivo_nome = f"{pasta_destino}/{nome}-{time}.tar.gz"
 
     comand_tar=(f"tar -czf {arquivo_nome} {arquivo_origem} 2> /dev/null")
 
+    status = os.system(comand_tar)
     try:
-
-        nome = arquivo_origem.name
-        status = os.system(comand_tar)
 
         if status != 0:
             raise OSError()
@@ -43,47 +42,32 @@ def main(lista, destino):
     
     origens=[]
     with open(lista, 'r') as file:
-        origem = [line.strip() for line in file]
+        origens = [line.strip() for line in file]
 
+    print("Inicia os backups...")
     threads=[]
-    iniciadas=0
     for origem in origens:
 
-        real_thread = Thread(target=thread, args=(origem, destino))
+        print(f"Faz o backup {origem}...")
+        real_thread = Thread(target=worker, args=(origem, destino))
 
         real_thread.start()
 
         threads.append(real_thread)
 
-        iniciadas += 1
-
-    encerradas=0
-    sucessos_final=[]
-    falhas_final=[]
-    while encerradas < iniciadas:
-
-        print("Verifing...")
-
-        for sucesso in sucessos:
-            if not sucesso in sucessos_final:
-                print(sucesso)
-                sucessos_final.append(sucesso)
-                encerradas +=1
-
-        for falha in falhas:
-            if not falha in falhas_final:
-                print(falha)
-                falhas_final.append(falha)
-                encerradas +=1
-
-        time.sleep(1)
     
     for thread in threads:
         thread.join()
 
-    print("Sucessos:")
-    for sucesso in sucessos_final:
-        print(sucesso)
+    print("Verifing...")
+    for sucesso in sucessos:
+        print(f"O filho {sucesso.split(";")[1]} terminou com sucesso")
+    for falha in falhas:
+        print(f"O filho {falha.split(";")[1]} falhou")
+
+    print("Os sucessos são:")
+    for sucesso in sucessos:
+        print(sucesso.split(";")[-2])
 
 if __name__ == "__main__":
     main(sys.argv[1], sys.argv[2])
