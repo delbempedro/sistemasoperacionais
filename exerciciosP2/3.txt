@@ -1,0 +1,4 @@
+6ccd0b6e9fbb603a7cb62afe9d29116a1c98ee1ca5a7959b5c951c302d04d07c ../others/ipc.sh
+b612bd48452cb4debddaf46d64cb0cf06bd517d378400193261938433a7bcd99 ../others/maiormenor2.sh
+33e656e75ebe2d2882da0248cb0150c0c298e0a6db4bae50d01381c8fc9e0bec ../others/exercicios.txt
+adaf665d7c31d3fc67bbad3b4c740c468b92b0dfa1cf196edbc544c4941d87a6 ../others/maiormenor.sh

@@ -2,16 +2,14 @@
 import sys
 import os
 import datetime
-from threading import Thread, Lock
+import time
+from threading import Thread
 
-sucessos = []
-falhas = []
+resultados=[]
 
-global_lock = Lock()
+def worker(arquivo_origem, pasta_destino, index_thread):
 
-def worker(arquivo_origem, pasta_destino):
-
-    global sucessos
+    global resultados
 
     time = datetime.datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
     nome = os.path.basename(arquivo_origem)
@@ -27,47 +25,68 @@ def worker(arquivo_origem, pasta_destino):
 
         mensagem = f"Success;{nome};{arquivo_nome};"
 
-        with global_lock:
-            sucessos.append(mensagem)
+        resultados[index_thread]=mensagem
 
     except:
 
         mensagem = f"Failed;{nome};tar: couldn't read the file: Permission denied;"
 
-        with global_lock:
-            falhas.append(mensagem)
+        resultados[index_thread]=mensagem
     
 
 def main(lista, destino):
     
     origens=[]
+    numero_threads=0
     with open(lista, 'r') as file:
         origens = [line.strip() for line in file]
 
+    numero_threads=len(origens)
+    global resultados
+    resultados=[None]*numero_threads
+
     print("Inicia os backups...")
     threads=[]
-    for origem in origens:
+    for index in range(len(origens)):
 
+        origem = origens[index]
         print(f"Faz o backup {origem}...")
-        real_thread = Thread(target=worker, args=(origem, destino))
+        real_thread = Thread(target=worker, args=(origem, destino, index))
 
         real_thread.start()
 
         threads.append(real_thread)
 
+    threads_encerradas=0
+    sucessos=[]
+    while numero_threads>threads_encerradas:
+
+        print("Verifing...")
+
+        for index in range(len(resultados)):
+
+            resultado = resultados[index]
+
+            if not resultado == None:
+
+                if resultado.split(";")[0] == "Success":
+                    print(f"O filho {resultado.split(";")[1]} terminou com sucesso")
+                    sucessos.append(resultado.split(";")[-2])
+                elif resultado.split(";")[0] == "Failed":
+                    print(f"O filho {resultado.split(";")[1]} falhou")
+                
+                resultados[index] = None
+
+                threads_encerradas+=1
+
+        time.sleep(1)
     
     for thread in threads:
         thread.join()
 
-    print("Verifing...")
-    for sucesso in sucessos:
-        print(f"O filho {sucesso.split(";")[1]} terminou com sucesso")
-    for falha in falhas:
-        print(f"O filho {falha.split(";")[1]} falhou")
-
     print("Os sucessos são:")
     for sucesso in sucessos:
-        print(sucesso.split(";")[-2])
+        print(f"    {sucesso}")
 
 if __name__ == "__main__":
     main(sys.argv[1], sys.argv[2])
