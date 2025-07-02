@@ -1,0 +1,165 @@
+PROVA DE SISTEMA OPERACIONAIS
+ 
+Criei um diretório: PROVA, e sub-diretórios Q1, Q2 e Q3, contendo as respostas das questões 1, 2 e 3.
+Nele deve ter um arquivo com o seu número USP e seu nome. (NAO ESQUECA DE COLOCAR O NOME E NÚMERO USP)
+Organize os resultados dentro destes diretórios
+Os programas devem executar no seu respectivo diretório.
+Crie um README para cada questão indicando como devem ser executados e
+qual foi o resultado da execução dos scripts.
+
+Questões:
+1 - Corrija os scripts dos anexos 1 e 2. Mostre as correções e o resultado da execução.
+O programa deve calcular A,B,C em paralelo, onde o primeiro cálculo resulta A=1253, B=3489 e C=2964.
+Deve calcula em paralelo R1 = A + B, R2 = A + C e R3 = B + C
+Por fim, resultado = R1 + R2 + R3
+<2.0>
+
+2 - Apresente um diagrama mostrando quais são os componentes de um processo e de uma thread, descreva o que é cada componente. <1.0>
+Quais as diferenças entre eles e qual a vantagem e desvantagem de cada um? <1.0>
+
+3 - O script hash.extensao <diretorio_entrada> <arquivo_log>, verifica o condeúdo de um diretório informado
+em <diretório_entrada> e calcula o código hash md5 (use md5sum) para cada um de seus arquivos (no diretório principal e nos subdiretórios),
+gerando um arquivo_log contendo o hash calculado de cada arquivo.  
+O resultado deve ter a estrutura:
+#diretorio principal:
+arquivo - hashcode
+###################################
+#subdiretório: nome subdiretório
+subdireatorio/arquivo - hashcode
+
+Os scripts devem ter um pai que atribui tarefas para os filhos. Cada filho deverá executar o hash de
+um dos arquivos independemente e em paralelo e ao final retornar para o pai o resultado do código hash.
+O pai deverá criar o arquivo_log e salva-lo em disco após o término do cálculo de hash de todos os arquivos.
+Não podem ser criados mais do que 5 filhos ao mesmo tempo. Se houver mais que 5 arquivos, cada vez que termina um filho, o pai deverá
+atribuir tarefa para outro filho (garantindo sempre 5 filhos em execução simultânea).
+
+(a) Implemente usando fork de processos com IPC pipe em BASH  (3.0)
+(b) Implemente usando threads em python.  (3.0)
+
+
+
+###########################################################################################################
+###########################################################################################################
+###########################################################################################################
+
+###########################################################################################################
+ANEXO 1
+#
+
+#!/usr/bin/env bash
+set -euo pipefail
+
+mkfifo pipe_a
+
+
+exec 3<>pipe_a
+
+
+rm pipe_a
+
+
+filho1() {
+  echo "Filho 1 (PID $$) iniciado"
+  sleep "$1"
+  read "1253" >&3
+  echo "Cálculo de A finalizado"
+}
+
+
+filho6() {
+  echo "Filho 6 (PID $$) iniciado"
+  sleep "$1"
+  read $(( $2 + $3 )) >&8
+  echo "Cálculo de R3 finalizado"
+}
+
+echo "Pai (PID $$) iniciando..."
+
+filho1 3  
+pid1=$!
+filho2 1  
+pid2=$!
+filho3 4  
+pid3=$!
+
+echo -r a <&3
+echo -r b <&4
+echo -r c <&5
+
+echo "Pai recebeu: A=$a, B=$b, C=$c"
+
+filho4 2 "$a" "$b"
+pid4=$!
+filho5 2 "$a" "$c"
+pid5=$!
+filho6 2 "$b" "$c"
+pid6=$!
+
+echo -r r1 <&6
+echo -r r2 <&7
+echo -r r3 <&8
+
+(( r = r1 + r2 + r3 ))
+echo "Resultado final R = $r"
+
+wait "$pid1" && echo "Pai detectou que Filho 1 terminou"
+wait "$pid2" && echo "Pai detectou que Filho 2 terminou"
+wait "$pid3" && echo "Pai detectou que Filho 3 terminou"
+wait "$pid4" && echo "Pai detectou que Filho 4 terminou"
+wait "$pid5" && echo "Pai detectou que Filho 5 terminou"
+wait "$pid6" && echo "Pai detectou que Filho 6 terminou"
+
+exec 3<&- 4<&- 5<&- 6<&- 7<&- 8<&-
+
+echo "Pai finalizado. Todos os filhos terminaram."
+
+
+
+
+###########################################################################################################
+ANEXO 2
+#
+
+
+#!/usr/bin/env python3
+import sys
+import time
+from threading import Thread
+
+
+
+def tarefa1(t):
+    global A
+    print("Thread 1 iniciado", flush=True)
+    time.sleep(t)
+    A = 1253
+    print("Cálculo de A finalizado", flush=True)
+
+
+
+def main():
+    print("Thread mestre iniciando...", flush=True)
+
+    t1 = Thread(target=tarefa1, args=(3,))
+    t1.start()
+
+    t1.join()
+    print(f"Mestre recebeu: A={A}, B={B}, C={C}", flush=True)
+
+    t6 = Thread(target=tarefa6, args=(2,))
+    t6.start()
+
+    t6.join()
+    resultado = R1 + R2 + R3
+    print(f"Resultado final R = {resultado}", flush=True)
+
+    print("Thread mestre finalizada. Todas as threads terminaram.", flush=True)
+
+if __name__ == "__main__":
+    # Python threads rodam em qualquer plataforma
+    main()
+
+###########################################################################################################
+###########################################################################################################
+###########################################################################################################
+

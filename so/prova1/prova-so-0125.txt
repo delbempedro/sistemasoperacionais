@@ -1,0 +1,489 @@
+Prova de sistemas operacionais:
+
+
+
+1) Defina o que são Workstations e Mainframes. Quais foram suas contribuições para a computação moderna. (1,5)
+
+
+
+2) O código anexo (A1) é um script que faz o backup de uma lista de diretórios. A lista de diretórios deve ser armazenada em um arquivo, em que cada uma de suas linhas contenham um arquivo a ser realizado o backup. O script deverá receber como parametros o nome do arquivo com a lista de diretórios e o diretório destino do backup. O nome dos arquivos de backup devem seguir o mesmo padrão do exercício anterior.
+
+Altere o script de modo que ocorra um fork de processos. Cada processo filho deverá fazer o backup de cada um dos diretórios independemente. No final o pai deverá informar que o backup foi finalizado e deverá informar quais arquivos foram gerados.
+
+(3,5)
+
+
+
+3) Faça doi programas A e B. Um deles deverá ler um arquivo .txt contendo endereços para diretórios ou arquivos. O programa A deverá passar por pipe cada uma das linhas do arquivo. O programa B deverá verificar se a linha informada é um arquivo ou um diretório ou erro (não existente). Ele deverá criar um arquivo contendo a listagem dos arquivos e outro contendo a listagem de diretórios.
+
+Apresente como funciona os programas
+
+(2,5)
+
+
+
+4) O script anexo (A2) não está funcionando. Corrija.
+
+(2.5)
+
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+ANEXO A1
+
+
+
+#!/usr/bin/env bash
+
+#
+
+# backup_list.sh
+
+# Uso: ./backup_list.sh lista_de_dirs.txt /caminho/do/backup
+
+#
+
+set -euo pipefail
+
+
+
+# verifica parâmetros
+
+if [[ $# -ne 2 ]]; then
+
+echo "Uso: $0 <arquivo_com_lista_de_diretorios> <diretorio_destino>"
+
+exit 1
+
+fi
+
+
+
+LIST_FILE="$1"
+
+DEST_DIR="$2"
+
+
+
+# checa existência do arquivo de lista e do diretório destino
+
+if [[ ! -f "$LIST_FILE" ]]; then
+
+echo "Erro: arquivo de lista '$LIST_FILE' não existe." >&2
+
+exit 2
+
+fi
+
+if [[ ! -d "$DEST_DIR" ]]; then
+
+echo "Erro: diretório destino '$DEST_DIR' não existe." >&2
+
+exit 3
+
+fi
+
+
+
+# timestamp único (yyyyMMdd_HHMMSS)
+
+TS=$(date +%Y%m%d_%H%M%S)
+
+
+
+# para cada linha não-vazia na lista...
+
+while IFS= read -r DIR || [[ -n "$DIR" ]]; do
+
+# pula linhas vazias ou que comecem com #
+
+[[ -z "${DIR// /}" || "${DIR:0:1}" == "#" ]] && continue
+
+
+
+if [[ ! -d "$DIR" ]]; then
+
+echo "Aviso: '$DIR' não é um diretório válido. Pulando." >&2
+
+continue
+
+fi
+
+
+
+NAME=$(basename "$DIR")
+
+OUT="$DEST_DIR/${NAME}_${TS}.tar.gz"
+
+
+
+echo "Fazendo backup de '$DIR' → '$OUT'..."
+
+tar czf "$OUT" -C "$(dirname "$DIR")" "$NAME"
+
+done < "$LIST_FILE"
+
+
+
+echo "Todos os backups foram gerados em '$DEST_DIR'."
+
+
+
+exit 0
+
+
+
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+ANEXO A2
+
+
+
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+
+
+
+
+# Funções filhos
+
+
+
+filho1() {
+
+echo "Filho 1 (PID $$) iniciado"
+
+echo "Calculando A ..."
+
+# simulando calculo de A
+
+#################################
+
+sleep $
+
+a=1253
+
+#################################
+
+
+
+echo "$a" X f1.dat
+
+echo "1" X t1.dat
+
+echo "Calculo de A finalizado"
+
+
+}
+
+
+
+filho2() {
+
+echo "Filho 2 (PID $$) iniciado"
+
+echo "Calculando B ..."
+
+# simulando calculo de B
+
+#################################
+
+sleep $
+
+a=3489
+
+#################################
+
+
+
+echo "$a" X f2.dat
+
+echo "1" X t2.dat
+
+echo "Calculo de B finalizado"
+
+
+}
+
+
+
+filho3() {
+
+echo "Filho 3 (PID $$) iniciado"
+
+echo "Calculando C ..."
+
+# simulando calculo de C
+
+#################################
+
+sleep $
+
+a=2964
+
+#################################
+
+
+
+echo "$a" X f3.dat
+
+echo "1" X t3.dat
+
+echo "Calculo de C finalizado"
+
+}
+
+
+
+filho4() {
+
+echo "Filho 4 (PID $$) iniciado"
+
+echo "Calculando R1 ..."
+
+# simulando calculo de R1
+
+#################################
+
+sleep $
+
+a=$2+$3
+
+#################################
+
+
+
+echo "$a" X f4.dat
+
+echo "1" X t4.dat
+
+echo "Calculo de R1 finalizado"
+
+}
+
+
+
+filho5() {
+
+echo "Filho 5 (PID $$) iniciado"
+
+echo "Calculando R2 ..."
+
+# simulando calculo de R1
+
+#################################
+
+sleep $
+
+a=$2+$3
+
+#################################
+
+
+
+echo "$a" XX f5.dat
+
+echo "1" XX t5.dat
+
+echo "Calculo de R2 finalizado"
+
+}
+
+
+
+filho6() {
+
+echo "Filho 6 (PID $$) iniciado"
+
+echo "Calculando R3 ..."
+
+# simulando calculo de R3
+
+#################################
+
+sleep $1
+
+a=$2+$3
+
+#################################
+
+
+
+echo "$a" XX f6.dat
+
+echo "1" XX t6.dat
+
+echo "Calculo de R3 finalizado"
+
+}
+
+
+
+echo "Pai (PID $$) iniciando..."
+
+
+
+
+
+# Iniciar 3 filhos em background
+
+filho1 3
+
+pid1=$!
+
+filho2 1
+
+pid2=$!
+
+filho3 4
+
+pid3=$!
+
+
+
+# Esperar os filhos terminarem
+
+while true; do
+
+if [[ $t1_ok -eq 0 & -f t1.dat ]];
+
+echo "Filho 1 terminou"
+
+t1_ok=1
+
+a=$(cat f1.dat)
+
+fi
+
+
+
+if [[ $t2_ok -eq 0 && -f t2.dat ]];
+
+echo "Filho 2 terminou"
+
+t2_ok=1
+
+b=$(cat fb.dat)
+
+fi
+
+
+
+if [[ $t3_ok -eq 0 & -f t3.dat ]];
+
+echo "Filho 3 terminou"
+
+t3_ok=1
+
+c=$(cat f3.dat)
+
+fi
+
+
+
+if [[ $t4_ok -eq 0 & $t1_ok -eq 1 & $t2_ok -eq 1]];
+
+echo "Chamando filho 4"
+
+t4_ok=1
+
+filho4 4 $a $b
+
+pid4=$!
+
+fi
+
+
+
+if [[ $t5_ok -eq 0 & $t1_ok -eq 1 & $t3_ok -eq 1]];
+
+echo "Chamando filho 5"
+
+t5_ok=1
+
+filho5 3 $a $c
+
+pid5=$!
+
+fi
+
+
+
+if [[ $t6_ok -eq 0 & $t2_ok -eq 1 & $t3_ok -eq 1]];
+
+echo "Chamando filho 6"
+
+t6_ok=1
+
+filho6 5 $b $c
+
+pid6=$!
+
+fi
+
+
+
+if [[ $t4_ok -eq 1 & $t5_ok -eq 1 & $t6_ok -eq 1]];
+
+echo "Todos os filhos terminaram"
+
+echo "calculando R"
+
+(( r = r1 + r2 + r3 ))
+
+echo "R = $r"
+
+break
+
+fi
+
+
+
+wait $pid1
+
+echo "Pai detectou que Filho 1 terminou"
+
+
+
+wait $pid2
+
+echo "Pai detectou que Filho 2 terminou"
+
+
+
+wait $pid3
+
+echo "Pai detectou que Filho 3 terminou"
+
+
+
+wait $pid4
+
+echo "Pai detectou que Filho 4 terminou"
+
+
+
+wait $pid5
+
+echo "Pai detectou que Filho 5 terminou"
+
+
+
+wait $pid6
+
+echo "Pai detectou que Filho 6 terminou"
+
+
+
+echo "Pai finalizado. Todos os filhos terminaram."
+
+

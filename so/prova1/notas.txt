@@ -1,0 +1,81 @@
+Correcao - aluno 1
+NUSP: 11810561
+nota:0
+
+
+Correcao - aluno 2
+NUSP: 14669704
+nota:0.25
+
+
+Correcao - aluno 3
+NUSP: 12702899
+nota: 4.2
+
+
+Correcao - aluno 4
+NUSP: 
+nota: 4.25
+
+
+Correcao - aluno 5
+NUSP: 13837877
+nota: 0
+
+
+Correcao - aluno 6
+NUSP: 12558190
+nota: 1.25
+
+
+
+Correcao - aluno 7
+NUSP: 146785948
+nota: 5.75
+
+
+
+Correcao - aluno 8
+NUSP: 13718147
+nota: 6.25
+
+
+Correcao - aluno 9
+NUSP: 5255417
+nota: 3.75
+
+
+
+Correcao - aluno 10
+NUSP: 12560189
+nota: 3.25
+
+
+
+Correcao - aluno 11
+NUSP: 11811760
+nota: 1.5
+
+
+
+Correcao - aluno 12
+NUSP: 13687706
+nota: 1.5
+
+
+
+Correcao - aluno 13
+NUSP: 13862330
+nota: 5.75
+
+
+
+Correcao - aluno 14
+NUSP: 12701939
+nota: 2
+
+
+
+Correcao - aluno 15
+NUSP: 13749757
+nota: 0.75
